@@ -1,0 +1,14 @@
+version: "3" # Version de Compose
+name: woodytoys # Nom du projet
+services:
+  web: # Nom du conteneur
+    image: web # Image du conteneur
+    links: # Liaison avec d'autres conteneurs
+      - db:database
+    ports: # Port h^ote -> Port conteneur
+      - 80:80
+  soa:
+    image: soa
+  
+  resolv:
+    image: resolv
