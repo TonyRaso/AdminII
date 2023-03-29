@@ -1,14 +1,63 @@
-version: "3" # Version de Compose
-name: woodytoys # Nom du projet
+version: "3.8"
+name: woodytoys
 services:
-  web: # Nom du conteneur
-    image: web # Image du conteneur
-    links: # Liaison avec d'autres conteneurs
-      - db:database
-    ports: # Port h^ote -> Port conteneur
+  resolver:
+    build: ./resolver
+    ports:
+      - 53:53/udp
+      - 53:53/tcp
+    networks:
+      secure_zone:
+        ipv4_address: 192.168.0.1
+  web:
+    build: ./web
+    links:
+      - db:db
+    ports:
       - 80:80
-  soa:
-    image: soa
-  
-  resolv:
-    image: resolv
+      #- 443:443
+    networks:
+      secure_zone:
+        ipv4_address: 192.168.0.2
+  db:
+    build: ./db
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      secure_zone:
+        ipv4_address: 192.168.0.3
+  mail:
+    build: ./mail
+    ports:
+      - "25:25"
+      - "143:143"
+      - "587:587"
+      - "993:993"
+    networks:
+      secure_zone:
+        ipv4_address: 192.168.0.4
+  client_1:
+    build: ./client_1
+    dns:
+      - 192.168.0.1
+    networks:
+      secure_zone:
+        ipv4_address: 192.168.0.200
+  client_2:
+    build: ./client_2
+    dns:
+      - 192.168.0.1
+    networks:
+      secure_zone:
+        ipv4_address: 192.168.0.201
+volumes:
+  db-data:
+networks:
+  secure_zone:
+    ipam:
+      driver: default
+      config: 
+        - subnet: 192.168.0.0/16
+          gateway: 192.168.254.254
