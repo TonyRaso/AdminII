@@ -7,13 +7,14 @@ $TTL 86400
                     604800     ; expire after 1 week
                     86400 )    ; minimum TTL of 1 day
 
-      IN     NS     ns.woodytoys.lab.
+      IN     NS     soa.woodytoys.lab.
       IN     MX     10     mail.woodytoys.lab.
 
-ns           IN     A       192.168.0.1
-resolver     IN     A       192.168.0.1
+soa          IN     A       192.168.0.5
+resolv       IN     A       192.168.0.6
 www          IN     A       192.168.0.2
 mail         IN     A       192.168.0.4
+db           IN     A       192.168.0.3
 
 imap         IN     CNAME   mail
 pop3         IN     CNAME   mail

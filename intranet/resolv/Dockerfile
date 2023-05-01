@@ -1,10 +1,8 @@
-FROM ubuntu/bind9
+FROM ubuntu/bind9:latest
 
-MAINTAINER Bryan Devos
+RUN apt update
 
-COPY named.conf /etc/bind/
-COPY woodytoys.lab /etc/bind/woodytoys.lab
-COPY woodytoys.lab.reverse /etc/bind/woodytoys.lab.reverse
+COPY named.conf etc/bind/
 
 EXPOSE 53/tcp
 EXPOSE 53/udp

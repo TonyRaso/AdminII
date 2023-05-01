@@ -2,62 +2,55 @@ version: "3.8"
 name: woodytoys
 services:
   resolver:
-    build: ./resolver
-    ports:
-      - 53:53/udp
-      - 53:53/tcp
+    build: ./resolv
+    container_name: resolver
+    depends_on:
+      - soa
     networks:
-      secure_zone:
-        ipv4_address: 192.168.0.1
+      woodytoys:
+        ipv4_address: 192.168.0.6
+  soa:
+    build: ./soa
+    container_name: soa
+    networks:
+      woodytoys:
+        ipv4_address: 192.168.0.5
+  mail:
+    build: ./mail
+    container_name: mail
+    networks:
+      woodytoys:
+        ipv4_address: 192.168.0.4
   web:
     build: ./web
-    links:
-      - db:db
+    container_name: web
     ports:
-      - 80:80
-      #- 443:443
+      - "8080:80"
+    depends_on:
+      - db
+    #volumes:
+    #  - ./web/html
     networks:
-      secure_zone:
+      woodytoys:
         ipv4_address: 192.168.0.2
   db:
     build: ./db
-    volumes:
-      - db-data:/var/lib/mysql
-    ports:
-      - 3306:3306
+    container_name: DB
     networks:
-      secure_zone:
+      woodytoys:
         ipv4_address: 192.168.0.3
-  mail:
-    build: ./mail
-    ports:
-      - "25:25"
-      - "143:143"
-      - "587:587"
-      - "993:993"
+  user1:
+    build: ./user1
+    container_name: user1
     networks:
-      secure_zone:
-        ipv4_address: 192.168.0.4
-  client_1:
-    build: ./client_1
-    dns:
-      - 192.168.0.1
-    networks:
-      secure_zone:
-        ipv4_address: 192.168.0.200
-  client_2:
-    build: ./client_2
-    dns:
-      - 192.168.0.1
-    networks:
-      secure_zone:
-        ipv4_address: 192.168.0.201
-volumes:
-  db-data:
+      woodytoys:
+        ipv4_address: 192.168.0.7
+
+  
 networks:
-  secure_zone:
+  woodytoys:
+    driver: bridge
     ipam:
       driver: default
-      config: 
-        - subnet: 192.168.0.0/16
-          gateway: 192.168.254.254
+      config:
+        - subnet: 192.168.0.0/24

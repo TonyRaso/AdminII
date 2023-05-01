@@ -1,10 +1,15 @@
 FROM ubuntu/bind9
 
-MAINTAINER Bryan Devos
+RUN apt-get update && apt-get install -y bind9
 
 COPY named.conf /etc/bind/
+COPY woodytoys.lab /etc/bind/
+COPY woodytoys.lab.reverse /etc/bind/
+
+RUN mkdir /var/log/named
+#RUN apt-get install vim nano -y
 
 EXPOSE 53/tcp
 EXPOSE 53/udp
 
-CMD ["named","-g"]
+CMD ["/usr/sbin/named","-g"]
