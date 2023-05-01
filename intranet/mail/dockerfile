@@ -2,8 +2,17 @@ FROM ubuntu:latest
 
 RUN apt update
 
-RUN apt install dovecot-imapd dovecot-pop3d -y
-RUN apt install postfix -y
+RUN apt-get install -y postfix
+RUN apt-get install -y dovecot-imapd 
+RUN apt-get install -y dovecot-pop3d
+RUN apt-get install -y dovecot-core
+
+
+RUN apt-get install -y nmap
+RUN apt-get install -y nano
+RUN apt-get install -y net-tools
+RUN apt-get install -y telnet
+
 
 COPY dovecot.conf /etc/dovecot/
 COPY main.cf /etc/postfix/
