@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt update
+RUN apt update --fix-missing
 
 RUN apt-get install -y postfix
 RUN apt-get install -y dovecot-imapd 
@@ -18,3 +18,7 @@ COPY dovecot.conf /etc/dovecot/
 COPY main.cf /etc/postfix/
 
 CMD service postfix start && service dovecot start && tail -f /dev/null
+
+EXPOSE 25 
+EXPOSE 110 
+EXPOSE 143
