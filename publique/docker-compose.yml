@@ -1,18 +1,12 @@
 version: "3.8"
 name: woodytoys_publique
-services:
-  web:
-    build: ./web
-    container_name: web
-    ports:
-      - "80:80"
-    depends_on:
-      - db
-    #volumes:
-    #  - ./web/html
+services: 
+  soa_publique:
+    build: ./soa_publique
+    container_name: soa_publique
     networks:
       woodytoys:
-        ipv4_address: 192.168.1.2
+        ipv4_address: 192.168.1.5
 
   
 networks:
@@ -21,4 +15,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 192.168.0.0/24
+        - subnet: 192.168.1.0/24

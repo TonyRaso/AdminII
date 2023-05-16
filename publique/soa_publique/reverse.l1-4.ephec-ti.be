@@ -1,4 +1,4 @@
-$ORIGIN 126.144.51.in-addr.arpa.
+$ORIGIN 193.50.20.in-addr.arpa.
 $TTL 86400
 @     IN     SOA    ns.l1-4.ephec-ti.be.     hostmaster.l1-4.ephec-ti.be. (
                     2001062501 ; serial
@@ -9,6 +9,6 @@ $TTL 86400
 
         IN      NS      ns.l1-4.ephec-ti.be.
 
-228      IN      PTR     ns.l1-4.ephec-ti.be.
-228      IN      PTR     www.l1-4.ephec-ti.be.
-228       IN      PTR     mail.l1-4.ephec-ti.be.
+52      IN      PTR     ns.l1-4.ephec-ti.be.
+52      IN      PTR     www.l1-4.ephec-ti.be.
+52      IN      PTR     mail.l1-4.ephec-ti.be.
